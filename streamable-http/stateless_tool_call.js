@@ -2,7 +2,7 @@
  * CONFIG (single source of truth)
  **************************************/
 const MCP_CONFIG = {
-  url: "<url>",
+  url: "",
   accessToken: "",          // optional
   devtoolsDelayMs: 1000     // delay before reading streams (learning/debug)
 };

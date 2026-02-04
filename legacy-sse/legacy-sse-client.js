@@ -12,8 +12,9 @@
  * CONFIG
  **************************************/
 const MCP_CONFIG = {
-  sseUrl: "http://localhost:5050/mcp/sse",
-  accessToken: "",
+  url: "",
+  accessToken: "",          // optional
+  devtoolsDelayMs: 1000     // delay before reading streams
 };
 
 /**************************************
@@ -42,7 +43,7 @@ async function connectSse() {
 
   console.log("🔌 Connecting to legacy SSE endpoint...");
 
-  const response = await fetch(MCP_CONFIG.sseUrl, {
+  const response = await fetch(MCP_CONFIG.url, {
     method: "GET",
     headers: {
       "Accept": "text/event-stream",
@@ -128,7 +129,7 @@ function processFrame(frame) {
 
   // Handle endpoint event (tells us where to POST)
   if (eventType === "endpoint") {
-    messageEndpoint = new URL(data, MCP_CONFIG.sseUrl.replace("/sse", "")).href;
+    messageEndpoint = new URL(data, MCP_CONFIG.url.replace("/sse", "")).href;
     return;
   }
 
@@ -452,7 +453,7 @@ async function main() {
     );
     console.log("Result:", result1);
 
-    // 5. Parallel tool calls with individual progress tracking
+    /* // 5. Parallel tool calls with individual progress tracking
     console.log("\n--- Parallel Tool Calls ---");
     const parallelResults = await callToolsParallel([
       {
@@ -479,7 +480,7 @@ async function main() {
       } else {
         console.log(`❌ ${r.name}: ${r.error.message}`);
       }
-    }
+    }*/
 
     console.log("\n✅ All operations completed!");
     console.log("Status:", getConnectionStatus());

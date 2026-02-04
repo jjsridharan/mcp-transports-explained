@@ -2,7 +2,7 @@
 
 ### Understanding MCP transports by watching them in the browser Network tab
 
-This repository explores how **Model Context Protocol (MCP)** transports actually behave in practice.
+This repository explores how **Model Context Protocol (MCP)** transports actually behave in practice. This repository is for engineers who want to understand MCP at the transport level, not via SDK abstractions.
 
 Instead of relying only on the specification or SDK abstractions, the examples here are designed to be:
 
@@ -11,6 +11,13 @@ Instead of relying only on the specification or SDK abstractions, the examples h
 * correlated with real HTTP requests, responses, and streams
 
 The goal is to build a **correct mental model** of MCP transports by observing real network traffic.
+
+Suggested reading order:
+1. README.md (this file)
+2. [streamable http readme](streamable-http/README.md)
+3. [legacy sse readme](legacy-sse/README.md)
+4. [mental-model](docs/mental-model.md)
+
 
 ---
 
@@ -135,6 +142,8 @@ Focus areas:
 * stateless tool calls
 * observing POST responses in the Network tab
 
+Dive deeper into streamable http [in this readme](streamable-http/README.md).
+
 ### `legacy-sse/`
 
 Demonstrates a legacy, session-wide SSE-based MCP client.
@@ -145,9 +154,11 @@ Focus areas:
 * client-side request correlation
 * progress notification routing
 
+Dive deeper into legacy sse [in this readme](legacy-sse/README.md).
+
 ### `docs/`
 
-Deeper explanations of mental models, tradeoffs, and browser constraints.
+Frame the mental model [in this readme](docs/mental-model.md).
 
 ---
 
@@ -159,8 +170,12 @@ Deeper explanations of mental models, tradeoffs, and browser constraints.
 >
 > You will see placeholders like the ones below — feel free to open the images while following along.
 >
-> **Placeholder:** *Browser Network tab showing a POST request with `text/event-stream` response*
-> `![Streamable HTTP POST streaming](./images/streamable-http-post-stream.png)`
+### Browser Network tab showing complete lifecycle of streamable http.
+![Streamable HTTP POST streaming](images/1_streamable_http_complete_lifecycle.png)
+
+### SSE response (only Accepted for post and actual response in SSE GET request)
+
+![SSE response](images/6_sse_tool_call_response.png)
 
 ---
 
