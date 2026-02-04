@@ -43,6 +43,23 @@ This is a **learning and reference repository**, not a production SDK.
 
 ---
 
+## How to use this repository
+
+> 📸 **Screenshots ahead**
+>
+> This repository is intentionally browser-first. Screenshots of the Network tab are used throughout to show *exactly* where streaming, responses, and events appear.
+>
+> You will see placeholders like the ones below — feel free to open the images while following along.
+>
+### Browser Network tab showing complete lifecycle of streamable http.
+![Streamable HTTP POST streaming](images/1_streamable_http_complete_lifecycle.png)
+
+### SSE response (only Accepted for post and actual response in SSE GET request)
+
+![SSE response](images/6_sse_tool_call_response.png)
+
+---
+
 ## The core mental model
 
 There are two fundamentally different MCP transport models represented here:
@@ -159,23 +176,6 @@ Dive deeper into legacy sse [in this readme](legacy-sse/README.md).
 ### `docs/`
 
 Frame the mental model [in this readme](docs/mental-model.md).
-
----
-
-## How to use this repository
-
-> 📸 **Screenshots ahead**
->
-> This repository is intentionally browser-first. Screenshots of the Network tab are used throughout to show *exactly* where streaming, responses, and events appear.
->
-> You will see placeholders like the ones below — feel free to open the images while following along.
->
-### Browser Network tab showing complete lifecycle of streamable http.
-![Streamable HTTP POST streaming](images/1_streamable_http_complete_lifecycle.png)
-
-### SSE response (only Accepted for post and actual response in SSE GET request)
-
-![SSE response](images/6_sse_tool_call_response.png)
 
 ---
 
