@@ -52,17 +52,39 @@ This script illustrates how MCP behaved prior to Streamable HTTP.
 
 > 📸 **Placeholder**: Single long-lived GET request with continuous SSE events
 
-### SSE Complete lifecycle
+### 1. The "Long Pipe" Lifecycle
 
-![Streamable HTTP POST reponse](../images/5_sse_complete_lifecycle.png)
+Unlike Streamable HTTP, the lifecycle here is dominated by a **single, persistent GET request**.
 
-### SSE response (only Accepted for post and actual response in SSE GET request)
+*   **The initial handshake:** The client hits `GET /sse`.
+*   **The Endpoint Event:** The server sends an `endpoint` event via SSE, telling the client where to send POST requests.
+*   **The POSTs:** All subsequent tool calls are sent to that specific endpoint.
 
-![SSE response](../images/6_sse_tool_call_response.png)
+![SSE Lifecycle](../images/5_sse_complete_lifecycle.png)
 
-### SSE event stream for all events
+---
 
-![SSE event stream](../images/7_sse_tool_call_event_stream.png)
+### 2. The Disconnected Response
+
+When you trigger a tool via `POST`, the response does **not** contain the result.
+
+*   The server returns `202 Accepted` (or `200 OK` with no body).
+*   This confirms "I received your request," not "Here is your answer."
+*   The actual data arrives separately over the GET stream.
+
+![SSE Response](../images/6_sse_tool_call_response.png)
+
+---
+
+### 3. The Event Stream (Interleaved Events)
+
+To find your result, you must scan the global GET stream. This is where multiple parallel requests get mixed together.
+
+*   **Request Payload:** You sent `id: 5` in the POST.
+*   **Event Stream:** You must scan every incoming message for `id: 5`.
+*   If multiple tools run at once, their chunks arrive interleaved on this single pipe.
+
+![SSE Event Stream](../images/7_sse_tool_call_event_stream.png)
 
 ---
 
