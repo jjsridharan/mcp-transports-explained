@@ -96,19 +96,37 @@ This script is useful for understanding:
 
 ## What to observe in DevTools
 
-### Complete lifecycle of streamable HTTP (stateful)
+### 1. Complete lifecycle of streamable HTTP (stateful)
+
+In the standard lifecycle, you will see a waterfall of 5 distinct requests. Even though they look like identical `POST`s to the same endpoint, they represent a full conversation:
+
+1.  **Handshake (`initialize`)**: The first POST. Client sends capabilities; Server assigns a Session ID.
+2.  **Notification (`notifications/initialized`)**: Client confirms it is ready.
+3.  **Discovery (`tools/list`)**: Client asks "What tools do you have?".
+4.  **Execution (`tools/call`)**: The actual work. **This is where streaming happens** (see next section).
+5.  **Teardown (`DELETE`)**: Client explicitly closes the session.
 
 ![Streamable HTTP life cycle](../images/1_streamable_http_complete_lifecycle.png)
 
 ---
 
-### Tool Call: Streaming Progress
+### 2. Tool Call: Streaming Progress (The "EventStream" Tab)
+
+When you click on the `tools/call` request, look at the **EventStream** or **Response** tab.
+
+*   You will see `notifications/progress` events arriving *while the request is still pending*.
+*   The server uses `Content-Type: text/event-stream` on the **response** to achieve this.
 
 ![Streamable HTTP POST streaming](../images/2_streamable_http_tool_call_event_stream.png)
 
 ---
 
-### Tool Call: Final Response
+### 3. Tool Call: Final Response
+
+The final result arrives on the same stream as the progress.
+
+*   Notice the `id` field matches the request, but this is just for protocol compliance.
+*   The connection closes immediately after this message.
 
 ![Streamable HTTP POST response](../images/3_streamable_http_tool_call_response.png)
 
@@ -134,7 +152,15 @@ The answer becomes obvious when you observe that no shared connection or session
 
 > Single POST request with streamed response completing and closing cleanly
 
-### Tool Call
+### Tool Call: The "One-Shot" Execution
+
+Compare this to the 5-phase lifecycle above.
+
+*   There is no `initialize` phase.
+*   There is no `Mcp-Session-Id`.
+*   The request executes, streams, and closes.
+
+This proves that MCP can run on purely stateless infrastructure (like Lambda or Kubernetes) without sticky sessions.
 
 ![Streamable HTTP POST response](../images/4_streamable_http_tool_call_stateless.png)
 

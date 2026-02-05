@@ -142,9 +142,6 @@ mcp-transports-explained/
 │
 ├── docs/
 │   ├── mental-model.md
-│   ├── streamable-http.md
-│   ├── legacy-sse.md
-│   └── browser-limitations.md
 │
 └── diagrams/
 ```

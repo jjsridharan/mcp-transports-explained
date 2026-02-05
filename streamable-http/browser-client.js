@@ -1,3 +1,12 @@
+/**
+ * ⚠️ SETUP INSTRUCTIONS ⚠️
+ * 
+ * Before running this script, you must update the following:
+ * 1. Set `MCP_CONFIG.url` to your running MCP server endpoint
+ * 2. Set `MCP_CONFIG.accessToken` if your server requires authentication (JWT)
+ * 3. Update the `callTool` function (Step 4) with a valid tool name and arguments for your server
+ */
+
 /**************************************
  * CONFIG (single source of truth)
  **************************************/
@@ -148,6 +157,7 @@ async function listTools(sessionId) {
  * Step 4: tools/call
  **************************************/
 async function callTool(sessionId) {
+  // ⚠️ UPDATE THIS with a real tool from your server
   const payload = {
     jsonrpc: "2.0",
     id: 4,

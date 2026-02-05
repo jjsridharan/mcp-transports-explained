@@ -1,3 +1,12 @@
+/**
+ * ⚠️ SETUP INSTRUCTIONS ⚠️
+ * 
+ * Before running this script, you must update the following:
+ * 1. Set `MCP_CONFIG.url` to your running MCP server endpoint
+ * 2. Set `MCP_CONFIG.accessToken` if your server requires authentication (JWT)
+ * 3. Update the `main` function at the bottom with valid tool names and arguments for your server
+ */
+
 /**************************************
  * MCP Legacy SSE Client with Request Tracking
  * 
@@ -428,6 +437,7 @@ function disconnect() {
  * Example Usage
  **************************************/
 async function main() {
+  // ⚠️ UPDATE THIS with real tools from your server
   try {
     // 1. Connect to SSE
     await connectSse();
